@@ -3,11 +3,14 @@ package spittr.web;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import spittr.data.SpitterRepository;
 import spittr.domain.Spitter;
+
+import javax.validation.Valid;
 
 @Controller
 @RequestMapping("/spitters")
@@ -25,7 +28,11 @@ public class SpitterController {
   }
 
   @RequestMapping(value = "/register", method = RequestMethod.POST)
-  public String processRegistration(Spitter spitter) {
+  public String processRegistration(@Valid Spitter spitter, Errors errors) {
+
+    if (errors.hasErrors()) {
+      return "registerForm";
+    }
     spitterRepository.save(spitter);
     return "redirect:/spitters/" + spitter.getUsername();
   }
