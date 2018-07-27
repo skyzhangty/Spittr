@@ -1,4 +1,4 @@
-package spittr;
+package spittr.domain;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
@@ -12,16 +12,20 @@ public class Spittle {
   private final Double latitude;
   private final Double longitude;
 
-  public Spittle(String message, Date time) {
-    this(message, time, null, null);
-  }
-
-  public Spittle(String message, Date time, Double latitude, Double longitude) {
-    this.id = null;
+  public Spittle(Long id, String message, Date time, Double latitude, Double longitude) {
+    this.id = id;
     this.message = message;
     this.time = time;
     this.latitude = latitude;
     this.longitude = longitude;
+  }
+
+  public Spittle(String message, Date time, Double latitude, Double longitude) {
+    this(null, message, time, latitude, longitude);
+  }
+
+  public Spittle(String message, Date time) {
+    this(null, message, time, null, null);
   }
 
   public Long getId() {
